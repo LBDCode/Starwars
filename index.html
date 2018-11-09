@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="Assets/css/style.css">
+
+
+    <title>Star Wars</title>
+</head>
+<body>
+    <header>
+        <h1>The Star Wars RPG</h1>
+    </header>
+    <main>
+        <div class="gameArea container flexbox">
+            <div class="playerArea" id="player">Player</div>
+            <div class="statsArea">Choose your player.</div>            
+            <div class="defendArea" id="opponent">Defender</div>
+            <div class="selectorArea">                
+                <h4>Players</h4>
+                <div class="card-group" id="characters">
+                    <div class="card playerCard" id="0">
+                            <img class="card-img-top" src="Assets/images/kylo.jpg" alt="kylo">
+                            <div class="card-body card-custom">
+                                <p class="card-text">Kylo</p>
+                            </div>
+                    </div>
+                    <div class="card playerCard" id="1">
+                            <img class="card-img-top" src="Assets/images/LukeTLJ.jpg" alt="luke">
+                            <div class="card-body card-custom">
+                                <p class="card-text">Luke</p>
+                            </div>
+                    </div>
+                    <div class="card playerCard" id="2">
+                            <img class="card-img-top" src="Assets/images/snoke.png" alt="snoke">
+                            <div class="card-body card-custom">
+                                <p class="card-text">Snoke</p>
+                            </div>
+                    </div>
+                    <div class="card playerCard" id="3">
+                            <img class="card-img-top" src="Assets/images/Rey.png" alt="rey">
+                            <div class="card-body card-custom">
+                                <p class="card-text">Rey</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="buttonArea">
+                <button id="battleBtn">Battle</button>
+                <button id="newGame">New Game</button>
+                
+            </div>
+            <div class="defeatedArea card-group" id="defeated">Defeated <br>
+            </div>
+            
+        </div>
+    </main>
+
+
+    <script src="Assets/js/script.js"></script>
+</body>
+</html>
