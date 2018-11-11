@@ -10,7 +10,7 @@ $(document).ready(function() {
 
         playerStats: [
             {
-                name: "Kylo Ren",
+                name: "Kylo",
                 role: "waiting",
                 origHealth: 110,
                 counterAttack: 11,
@@ -18,7 +18,7 @@ $(document).ready(function() {
                 attackPoints: 11,
             },
             {
-                name: "Luke Skywalker",
+                name: "Luke",
                 role: "waiting",
                 origHealth: 100,
                 counterAttack: 7,
@@ -36,9 +36,9 @@ $(document).ready(function() {
             {
                 name: "Rey",
                 role: "waiting",
-                origHealth: 145,
+                origHealth: 125,
                 counterAttack: 10,
-                healthPoints: 145,
+                healthPoints: 125,
                 attackPoints: 10,
             },   
         ],
@@ -83,28 +83,39 @@ $(document).ready(function() {
             var msg1 = "You attacked " + playerStr[opponent].name + " for " + playerStr[player].attackPoints + " damage.";
             var msg2 = playerStr[opponent].name + " attacked you" + " for " + playerStr[opponent].counterAttack + " damage.";
             $( ".statsArea" ).html( msg1 + '<br />' + msg2);
+            $( '#'+player+'-text' ).html(playerStr[player].name + ": " + playerStr[player].healthPoints);
+            $( '#'+opponent+'-text').html(playerStr[opponent].name + ": " + playerStr[opponent].healthPoints)
         },
 
         printMsg: function(type) {
-            
-            if (type === "player") {
-                message = "Choose your player.";
-            } else if (type === "opponent"){
-                message = "Choose your opponent.";
-            } else if (type === "battle") {
-                message = "Battle!";
-            } else if (type === "win") {
-                message = "You win the game!";
-            } else if (type === "matchWin") {
-                message = "You win the match. Choose your next opponent.";
-            } else if (type === "lose") {
-                message = "You lose! " + playerInfo.playerStats[opponent].name + " wins." 
-            }         
-            $( ".statsArea" ).html( message );
-
             if (type === "stats") {
                 this.printStats(player, opponent)
+            } else {
+                switch(type) {
+                    case "player":
+                        message = "Choose your player.";
+                        break;
+                    case "opponent":
+                        message = "Choose your opponent.";
+                        break;
+                    case "battle":
+                        message = "Battle!";
+                        break;
+                    case "win":
+                        message = "You win the game!";
+                        break;
+                    case "matchWin":
+                        message = "You win the match. Choose your next opponent.";
+                        break;
+                    case "lose":
+                        message = "You lose! " + playerInfo.playerStats[opponent].name + " wins."
+                        break; 
+                }       
+                $( ".statsArea" ).html( message );
             }
+            
+
+           
         
         },
 
@@ -113,6 +124,10 @@ $(document).ready(function() {
             $( "#1" ).detach().appendTo( "#characters" );
             $( "#2" ).detach().appendTo( "#characters" );
             $( "#3" ).detach().appendTo( "#characters" );
+            $( "#0-text" ).html(playerInfo.playerStats[0].name + ": " + playerInfo.playerStats[0].origHealth);
+            $( "#1-text" ).html(playerInfo.playerStats[1].name + ": " + playerInfo.playerStats[1].origHealth);
+            $( "#2-text" ).html(playerInfo.playerStats[2].name + ": " + playerInfo.playerStats[2].origHealth);
+            $( "#3-text" ).html(playerInfo.playerStats[3].name + ": " + playerInfo.playerStats[3].origHealth);
             this.printMsg("player");
         },
 
@@ -166,8 +181,8 @@ $(document).ready(function() {
         gamePlay: function() {
             var playerIdx = playerInfo.playerStats[player];       
             var opponentIdx = playerInfo.playerStats[opponent];
-            uiController.printMsg("stats");
-            playerInfo.calcPoints(playerIdx, opponentIdx);            
+            playerInfo.calcPoints(playerIdx, opponentIdx);  
+            uiController.printMsg("stats");                      
 
             //lose game
             if (playerIdx.healthPoints <= 0) {
