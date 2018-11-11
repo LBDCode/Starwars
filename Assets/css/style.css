@@ -5,6 +5,7 @@ body {
     background-size: cover; 
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
+    font-size: 14px;
 }
 
 
@@ -18,6 +19,11 @@ h1 {
   font-size: 50px;
   color: red;
   margin: 30px;
+}
+
+h4 {
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .gameArea {

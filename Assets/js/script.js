@@ -82,12 +82,28 @@ var uiController = {
         var playerStr = playerInfo.playerStats;
         var msg1 = "You attacked " + playerStr[defender].name + " for " + playerStr[attacker].attackPoints + " damage.";
         var msg2 = playerStr[defender].name + " attacked you" + " for " + playerStr[defender].counterAttack + " damage.";
-        var msg3 = 'Your health is: ' + Math.max(playerStr[attacker].healthPoints,0) + " ."
-        var msg4 = playerStr[defender].name + "'s health is: " + Math.max(playerStr[defender].healthPoints, 0) + " .";
-        $( ".statsArea" ).html( msg1 + '<br />' + msg2 + '<br />' + msg3 + '<br />' + msg4);
+        // var msg3 = 'Your health is: ' + Math.max(playerStr[attacker].healthPoints,0) + " ."
+        // var msg4 = playerStr[defender].name + "'s health is: " + Math.max(playerStr[defender].healthPoints, 0) + " .";
+        msgFnl = msg1 + '<br />' + msg2;
     },
 
-    printMsg: function(message) {
+    printMsg: function(type) {
+        
+        if (type === "player") {
+            message = "Choose your player.";
+        } else if (type === "opponent"){
+            message = "Choose your opponent.";
+        } else if (type === "battle") {
+            message = "Battle!";
+        } else if (type === "stats") {
+            message = this.printStats.msgFnl;
+        } else if (type === "win") {
+            message = "You win the game!";
+        } else if (type === "matchWin") {
+            message = "You win the match. Choose your next opponent.";
+        } else if (type === "lose") {
+            message = "You lose! " + playerInfo.playerStats[opponent].name + " wins." 
+        }
         $( ".statsArea" ).html( message );
     },
 
@@ -96,7 +112,7 @@ var uiController = {
         $( "#1" ).detach().appendTo( "#characters" );
         $( "#2" ).detach().appendTo( "#characters" );
         $( "#3" ).detach().appendTo( "#characters" );
-        $( ".statsArea" ).html( "Choose your player." );
+        this.printMsg("player");
     },
 
 };
@@ -114,14 +130,14 @@ var gameController = {
             divRole = '#' + playRole;
             playerInfo.changeRole(id, playRole);
             uiController.movePlayer(divID, divRole);
-            uiController.printMsg( "Choose your opponent.")
+            uiController.printMsg("opponent");
         } else if (opponent === "") {
             opponent = id;
             playRole = "opponent";
             divRole = '#' + playRole;
             playerInfo.changeRole(id, playRole);
             uiController.movePlayer(divID, divRole);
-            uiController.printMsg( "Battle!")
+            uiController.printMsg("battle");
         } else {
             alert("You've already selected your players.")
         }
@@ -132,29 +148,26 @@ var gameController = {
         playerInfo.changeRole(opponent, "defeated");
         uiController.movePlayer( "#"+opponent, "#defeated");
         opponent="";
-        uiController.printMsg( "You win the match. Choose your next opponent." );
+        uiController.printMsg("matchWin");
     },
 
     gameWin: function() {
         gameStatus = "won";
         playerInfo.changeRole(player, "won");
-        uiController.printMsg( "You win the game!" );
-        //battle button is made inactive
+        uiController.printMsg( "win" );
+        uiController.movePlayer("#"+opponent,"#defeated");    
     },
 
     gameLose: function() {
         gameStatus = "lose";
-        playerInfo.changeRole(player, "lost");
-        console.log("You Lose");
-        uiController.printMsg( "You lose!" );
-        //battle button is made inactive
-
+        playerInfo.changeRole(player, "defeated");
+        uiController.movePlayer("#"+player,"#defeated");
+        uiController.printMsg("lose");
     },
 
-    gamePlay: function() {
-        uiController.printStats(player, opponent);
+    gamePlay: function() {        
         playerInfo.calcPoints(playerInfo.playerStats[player], playerInfo.playerStats[opponent]);
-        
+        uiController.printStats(player, opponent);
         //lose game
         if (playerInfo.playerStats[player].healthPoints <= 0) {
             this.gameLose();
@@ -163,19 +176,19 @@ var gameController = {
             winCounter++;
             //check for game win
             if (winCounter === 3) {
-                gameController.gameWin();
+                this.gameWin();
             } else {
-                gameController.matchWin();
+                this.matchWin();
             }               
         }
     },
 
     newGame: function() {
+        //players and messge reset in UI, player stats reset, status and wins reset
         uiController.resetUI();
         playerInfo.init();
         gameStatus = "active";
         winCounter = 0;
-        //all characters move to selector area
     }
 };
 
