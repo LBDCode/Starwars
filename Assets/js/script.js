@@ -1,3 +1,5 @@
+// link to portfolio:  https://lbdcode.github.io/Bootstrap-Repository/ 
+
 $(document).ready(function() {
 
     var gameStatus = "active";
